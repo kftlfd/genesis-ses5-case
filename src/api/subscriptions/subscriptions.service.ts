@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
-import { subscriptionsTable, UpdateFrequency } from 'src/core/db/db.schema';
+import { and, eq } from 'drizzle-orm';
+import { subscriptionsTable, TokenModel, UpdateFrequency } from 'src/core/db/db.schema';
 import { DBService } from 'src/core/db/db.service';
 import { CreateSubDto } from './dto/create-sub.dto';
 
@@ -28,15 +28,30 @@ export class SubscriptionsService {
   }
 
   async createSub(inp: CreateSubDto) {
-    return this.dbService.db
+    const [sub] = await this.dbService.db
       .insert(subscriptionsTable)
-      .values({ email: inp.email, city: inp.city, frequency: inp.frequency });
+      .values({ email: inp.email, city: inp.city, frequency: inp.frequency, confirmed: false })
+      .$returningId();
+    return sub;
+  }
+
+  async confirmSub(t: TokenModel) {
+    await this.dbService.db
+      .update(subscriptionsTable)
+      .set({ confirmed: true })
+      .where(eq(subscriptionsTable.id, t.subscription));
+  }
+
+  async removeSub(t: TokenModel) {
+    await this.dbService.db
+      .delete(subscriptionsTable)
+      .where(eq(subscriptionsTable.id, t.subscription));
   }
 
   async getSubsWithFrequency(freq: UpdateFrequency) {
     return this.dbService.db
       .select()
       .from(subscriptionsTable)
-      .where(eq(subscriptionsTable.frequency, freq));
+      .where(and(eq(subscriptionsTable.confirmed, true), eq(subscriptionsTable.frequency, freq)));
   }
 }

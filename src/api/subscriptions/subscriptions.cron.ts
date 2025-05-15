@@ -4,12 +4,14 @@ import { Cron } from '@nestjs/schedule';
 import { EmailService } from 'src/core/email/email.service';
 import { WeatherReport, WeatherService } from '../weather/weather.service';
 import { UpdateFrequency } from 'src/core/db/db.schema';
+import { TokensService } from '../tokens/tokens.service';
 
 @Injectable()
 export class SubscriptionsCronService {
   constructor(
     private readonly subsService: SubscriptionsService,
     private readonly weatherService: WeatherService,
+    private readonly tokensService: TokensService,
     private readonly emailService: EmailService,
   ) {}
 
@@ -29,17 +31,28 @@ export class SubscriptionsCronService {
     const now = new Date().toISOString();
 
     for (const sub of subs) {
-      if (!reports.has(sub.city)) {
-        const report = await this.weatherService.getWeather(sub.city);
-        reports.set(sub.city, report);
-      }
-      const content = reports.get(sub.city) ?? null;
+      try {
+        if (!reports.has(sub.city)) {
+          const report = await this.weatherService.getWeather(sub.city);
+          reports.set(sub.city, report);
+        }
+        const content = reports.get(sub.city) ?? null;
 
-      this.emailService.sendEmail(
-        sub.email,
-        `${sub.city} weather ${freq} update: ${now}`,
-        JSON.stringify(content),
-      );
+        const unsubToken = await this.tokensService.getOrCreateUnsubToken(sub.id);
+
+        const email = {
+          content,
+          unsubToken,
+        };
+
+        this.emailService.sendEmail(
+          sub.email,
+          `${sub.city} weather ${freq} update: ${now}`,
+          JSON.stringify(email),
+        );
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 }
