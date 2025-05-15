@@ -16,6 +16,6 @@ export class AppConfig {
       DB_URL: process.env.DB_URL,
       WEATHER_API_URL: process.env.WEATHER_API_URL,
       WEATHER_API_KEY: process.env.WEATHER_API_KEY,
-    } satisfies EnvConfig);
+    } satisfies Partial<EnvConfig>);
   }
 }
