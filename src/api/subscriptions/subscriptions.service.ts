@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
-import { subscriptionsTable } from 'src/core/db/db.schema';
+import { SUB_UPD_FREQS, subscriptionsTable } from 'src/core/db/db.schema';
 import { DBService } from 'src/core/db/db.service';
 import { CreateSubDto } from './dto/create-sub.dto';
 
@@ -31,5 +31,12 @@ export class SubscriptionsService {
     return this.dbService.db
       .insert(subscriptionsTable)
       .values({ email: inp.email, city: inp.city, frequency: inp.frequency });
+  }
+
+  async getSubsWithFrequency(freq: (typeof SUB_UPD_FREQS)[number]) {
+    return this.dbService.db
+      .select()
+      .from(subscriptionsTable)
+      .where(eq(subscriptionsTable.frequency, freq));
   }
 }
