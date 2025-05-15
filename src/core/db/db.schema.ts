@@ -7,6 +7,8 @@ export const usersTable = mysqlTable('users', {
 
 export const SUB_UPD_FREQS = ['daily', 'hourly'] as const;
 
+export type UpdateFrequency = (typeof SUB_UPD_FREQS)[number];
+
 export const subscriptionsTable = mysqlTable('subscriptions', {
   id: int().autoincrement().primaryKey(),
   email: varchar({ length: 255 }).notNull().unique(),

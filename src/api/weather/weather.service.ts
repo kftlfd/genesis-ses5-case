@@ -17,6 +17,12 @@ const weatherApiResponseSchema = z.object({
   }),
 });
 
+export type WeatherReport = {
+  temperature: number;
+  humidity: number;
+  description: string;
+};
+
 @Injectable()
 export class WeatherService {
   constructor(
@@ -24,7 +30,7 @@ export class WeatherService {
     private readonly httpService: HttpService,
   ) {}
 
-  async getWeather(city: string) {
+  async getWeather(city: string): Promise<WeatherReport> {
     const res = await firstValueFrom(
       this.httpService
         .get(
