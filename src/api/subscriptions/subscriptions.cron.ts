@@ -4,14 +4,12 @@ import { Cron } from '@nestjs/schedule';
 import { EmailService } from 'src/core/email/email.service';
 import { WeatherReport, WeatherService } from '../weather/weather.service';
 import { UpdateFrequency } from 'src/core/db/db.schema';
-import { TokensService } from '../tokens/tokens.service';
 
 @Injectable()
 export class SubscriptionsCronService {
   constructor(
     private readonly subsService: SubscriptionsService,
     private readonly weatherService: WeatherService,
-    private readonly tokensService: TokensService,
     private readonly emailService: EmailService,
   ) {}
 
@@ -38,7 +36,7 @@ export class SubscriptionsCronService {
         }
         const content = reports.get(sub.city) ?? null;
 
-        const unsubToken = await this.tokensService.getOrCreateUnsubToken(sub.id);
+        const unsubToken = sub.unsubToken;
 
         const email = {
           content,

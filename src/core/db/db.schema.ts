@@ -15,19 +15,9 @@ export const subscriptionsTable = mysqlTable('subscriptions', {
   email: varchar({ length: 255 }).notNull().unique(),
   city: varchar({ length: 255 }).notNull(),
   frequency: mysqlEnum(SUB_UPD_FREQS).notNull(),
-  confirmed: boolean().default(false),
+  confirmed: boolean().notNull().default(false),
+  confirmToken: varchar({ length: 255 }).notNull().$defaultFn(randomUUID),
+  unsubToken: varchar({ length: 255 }).notNull().$defaultFn(randomUUID),
 });
 
-const TOKEN_TYPES = ['confirm-sub', 'unsub'] as const;
-
-export type TokenType = (typeof TOKEN_TYPES)[number];
-
-export const tokensTable = mysqlTable('tokens', {
-  token: varchar({ length: 255 }).$defaultFn(randomUUID).primaryKey(),
-  subscription: int()
-    .notNull()
-    .references(() => subscriptionsTable.id, { onDelete: 'cascade' }),
-  type: mysqlEnum(TOKEN_TYPES).notNull(),
-});
-
-export type TokenModel = typeof tokensTable.$inferSelect;
+export type Subscription = typeof subscriptionsTable.$inferSelect;

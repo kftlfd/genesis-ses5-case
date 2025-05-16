@@ -18,15 +18,18 @@ import { Response } from 'express';
 import { CreateSubDto } from './dto/create-sub.dto';
 import { SubscriptionsService } from './subscriptions.service';
 import { EmailService } from 'src/core/email/email.service';
-import { TokensService } from '../tokens/tokens.service';
 
 @Controller('api')
 export class SubscriptionsController {
   constructor(
     private readonly subsService: SubscriptionsService,
-    private readonly tokensService: TokensService,
     private readonly emailService: EmailService,
   ) {}
+
+  @Get('subs')
+  getAllSubs() {
+    return this.subsService.getAllSubs();
+  }
 
   @Post('subscribe')
   @UseInterceptors(NoFilesInterceptor())
@@ -39,12 +42,10 @@ export class SubscriptionsController {
 
     const newSub = await this.subsService.createSub(body);
 
-    const { token: confirmToken } = await this.tokensService.createToken(newSub.id, 'confirm-sub');
-
     this.emailService.sendEmail(
       body.email,
       'Confirm subscription',
-      `follow this link to confirm sub: http://localhost:8000/api/confirm/${confirmToken}`,
+      `follow this link to confirm sub: http://localhost:8000/api/confirm/${newSub.confirmToken}`,
     );
 
     return res
@@ -58,14 +59,10 @@ export class SubscriptionsController {
       throw new BadRequestException('Invalid token');
     }
 
-    const tokenData = await this.tokensService.getTokenData(token, 'confirm-sub');
-    if (!tokenData) {
+    const confirmed = await this.subsService.confirmSub(token);
+    if (!confirmed) {
       throw new NotFoundException('Token not found');
     }
-
-    await this.subsService.confirmSub(tokenData);
-
-    await this.tokensService.createToken(tokenData.subscription, 'unsub');
 
     return { message: 'Subscription confirmed successfully' };
   }
@@ -76,18 +73,11 @@ export class SubscriptionsController {
       throw new BadRequestException('Invalid token');
     }
 
-    const tokenData = await this.tokensService.getTokenData(token, 'unsub');
-    if (!tokenData) {
+    const unsubed = await this.subsService.removeSub(token);
+    if (!unsubed) {
       throw new NotFoundException('Token not found');
     }
 
-    await this.subsService.removeSub(tokenData);
-
     return { message: 'Unsubscribed successfully' };
-  }
-
-  @Get('subs')
-  getAllSubs() {
-    return this.subsService.getAllSubs();
   }
 }
