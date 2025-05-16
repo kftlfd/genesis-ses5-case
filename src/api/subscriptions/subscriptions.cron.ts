@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { SubscriptionsService } from './subscriptions.service';
 import { Cron } from '@nestjs/schedule';
 import { EmailService } from 'src/core/email/email.service';
-import { WeatherReport, WeatherService } from '../weather/weather.service';
 import { UpdateFrequency } from 'src/core/db/db.schema';
+import { SubscriptionsService } from './subscriptions.service';
+import { WeatherReport, WeatherService } from '../weather/weather.service';
 
 @Injectable()
 export class SubscriptionsCronService {
@@ -13,12 +13,12 @@ export class SubscriptionsCronService {
     private readonly emailService: EmailService,
   ) {}
 
-  @Cron('*/5 * * * * *')
+  @Cron('0 0 * * * *')
   async sendHourlyUpdates() {
     return this.sendUpdates('hourly');
   }
 
-  @Cron('*/8 * * * * *')
+  @Cron('0 30 12 * * *')
   async sendDailyUpdates() {
     return this.sendUpdates('daily');
   }

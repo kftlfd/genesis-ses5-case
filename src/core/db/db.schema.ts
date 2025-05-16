@@ -1,13 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { mysqlTable, varchar, mysqlEnum, int, boolean } from 'drizzle-orm/mysql-core';
 
-export const usersTable = mysqlTable('users', {
-  id: int().autoincrement().primaryKey(),
-  email: varchar({ length: 255 }).notNull().unique(),
-});
-
 export const SUB_UPD_FREQS = ['daily', 'hourly'] as const;
-
 export type UpdateFrequency = (typeof SUB_UPD_FREQS)[number];
 
 export const subscriptionsTable = mysqlTable('subscriptions', {
@@ -19,5 +13,4 @@ export const subscriptionsTable = mysqlTable('subscriptions', {
   confirmToken: varchar({ length: 255 }).notNull().$defaultFn(randomUUID),
   unsubToken: varchar({ length: 255 }).notNull().$defaultFn(randomUUID),
 });
-
 export type Subscription = typeof subscriptionsTable.$inferSelect;

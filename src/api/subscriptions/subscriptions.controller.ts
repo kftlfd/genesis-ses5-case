@@ -15,9 +15,9 @@ import {
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { Response } from 'express';
+import { EmailService } from 'src/core/email/email.service';
 import { CreateSubDto } from './dto/create-sub.dto';
 import { SubscriptionsService } from './subscriptions.service';
-import { EmailService } from 'src/core/email/email.service';
 
 @Controller('api')
 export class SubscriptionsController {
@@ -55,7 +55,7 @@ export class SubscriptionsController {
 
   @Get('confirm/:token')
   async confirmSub(@Param('token') token: string) {
-    if (!token) {
+    if (token.length < 10) {
       throw new BadRequestException('Invalid token');
     }
 
@@ -69,7 +69,7 @@ export class SubscriptionsController {
 
   @Get('unsubscribe/:token')
   async removeSub(@Param('token') token: string) {
-    if (!token) {
+    if (token.length < 10) {
       throw new BadRequestException('Invalid token');
     }
 
