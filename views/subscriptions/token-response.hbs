@@ -1,0 +1,31 @@
+<style>
+    .card-container {
+        min-height: 100%;
+        padding: 2rem 1rem;
+        display: grid;
+        place-content: center;
+    }
+
+    .card {
+        border: 1px solid currentColor;
+        border-radius: 8px;
+        background-color: var(--c-bg-2);
+        margin: 0;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1em
+    }
+
+    .card h1 {
+        margin: 0;
+        font-size: 2em;
+        font-weight: 500;
+    }
+</style>
+
+<div class="card-container">
+    <div class="card">
+        <h1>{{message}}</h1>
+    </div>
+</div>
