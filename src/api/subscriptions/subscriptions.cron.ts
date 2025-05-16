@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { EmailService } from 'src/core/email/email.service';
 import { UpdateFrequency } from 'src/core/db/db.schema';
@@ -7,6 +7,8 @@ import { WeatherReport, WeatherService } from '../weather/weather.service';
 
 @Injectable()
 export class SubscriptionsCronService {
+  private readonly logger = new Logger(SubscriptionsCronService.name);
+
   constructor(
     private readonly subsService: SubscriptionsService,
     private readonly weatherService: WeatherService,
@@ -49,7 +51,7 @@ export class SubscriptionsCronService {
           JSON.stringify(email),
         );
       } catch (err) {
-        console.log(err);
+        this.logger.log('sendUpdates', sub, err);
       }
     }
   }

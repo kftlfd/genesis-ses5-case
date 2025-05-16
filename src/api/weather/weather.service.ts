@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { catchError, firstValueFrom } from 'rxjs';
 import { z } from 'zod';
 import { AppConfig } from 'src/core/config/config';
@@ -25,6 +25,8 @@ export type WeatherReport = {
 
 @Injectable()
 export class WeatherService {
+  private readonly logger = new Logger(WeatherService.name);
+
   constructor(
     private readonly appConfig: AppConfig,
     private readonly httpService: HttpService,
@@ -38,7 +40,7 @@ export class WeatherService {
         )
         .pipe(
           catchError((err) => {
-            console.error(err);
+            this.logger.error('getWeather', err);
             throw err;
           }),
         ),
