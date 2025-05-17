@@ -1,11 +1,11 @@
 {
-  "id": "f9cfd2c7-fe9e-49aa-946e-f219b78576a7",
+  "id": "4d8d6a6a-40a4-4eb3-957a-8bc6fc0de0ab",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.subscriptions": {
-      "name": "subscriptions",
+    "public.gses5_subscriptions": {
+      "name": "gses5_subscriptions",
       "schema": "",
       "columns": {
         "id": {
@@ -57,8 +57,8 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "subscriptions_email_unique": {
-          "name": "subscriptions_email_unique",
+        "gses5_subscriptions_email_unique": {
+          "name": "gses5_subscriptions_email_unique",
           "nullsNotDistinct": false,
           "columns": [
             "email"
