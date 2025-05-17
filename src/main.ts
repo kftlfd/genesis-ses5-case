@@ -12,7 +12,7 @@ async function bootstrap() {
     }),
   });
 
-  const baseDir = join(__dirname, '..', '..');
+  const baseDir = join(__dirname, '..');
   app.useStaticAssets(join(baseDir, 'public'));
   app.setBaseViewsDir(join(baseDir, 'views'));
   app.engine(
