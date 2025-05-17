@@ -4,6 +4,7 @@ import { ConsoleLogger } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
 import { AppModule } from './app.module';
+import { env } from './env';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -25,6 +26,6 @@ async function bootstrap() {
   );
   app.setViewEngine('hbs');
 
-  await app.listen(8000);
+  await app.listen(env.PORT, env.HOST);
 }
 bootstrap().catch(console.error);

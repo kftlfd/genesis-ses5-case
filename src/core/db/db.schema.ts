@@ -1,8 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { varchar, pgEnum, serial, boolean, pgTableCreator } from 'drizzle-orm/pg-core';
-import { env } from 'src/env';
 
-const pgTable = pgTableCreator((name) => `${env.DB_TABLE_PREFIX}_${name}`);
+const pgTable = pgTableCreator((name) => `gses5_${name}`);
 
 export const SUB_UPD_FREQS = ['daily', 'hourly'] as const;
 export type UpdateFrequency = (typeof SUB_UPD_FREQS)[number];
