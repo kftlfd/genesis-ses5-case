@@ -1,0 +1,7 @@
+.bruno
+.db
+dist
+node_modules
+test
+.env
+.env.example
