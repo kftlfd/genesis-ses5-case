@@ -1,0 +1,98 @@
+<style>
+  .form-container {
+    min-height: 100%;
+    padding: 2rem 1rem;
+    display: grid;
+    place-content: center;
+  }
+
+  .subscr-form {
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    background-color: var(--c-bg-2);
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1em
+  }
+
+  .subscr-form h1 {
+    margin: 0;
+    font-size: 2em;
+    font-weight: 500;
+  }
+
+  .subscr-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+  }
+
+  .subscr-form input,
+  .subscr-form select {
+    padding: 0.4em 0.5em;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 1em;
+  }
+
+  .subscr-form .form-btns {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .subscr-form button {
+    border: 1px solid var(--c-fg-1);
+    border-radius: 4px;
+    background-color: var(--c-fg-1);
+    color: var(--c-bg-1);
+    font-size: 1em;
+    font-weight: 700;
+    padding: 0.4em 1em;
+    cursor: pointer;
+  }
+
+  .htmx-indicator {
+    display: none;
+  }
+
+  .htmx-request .htmx-indicator {
+    display: inline;
+  }
+
+  .htmx-request.htmx-indicator {
+    display: inline;
+  }
+</style>
+
+<div class='form-container'>
+  <form class='subscr-form' hx-post="/sub" hx-target="#form-response" hx-indicator="#load-indicator">
+    <h1>Subscribe to Weather Api</h1>
+    <label>
+      <span>Email</span>
+      <input name='email' type='email' placeholder="email" required />
+    </label>
+    <label>
+      <span>City</span>
+      <input name='city' type='string' placeholder="City" required />
+    </label>
+    <label>
+      <span>Frequency</span>
+      <select name='frequency'>
+        <option value='daily'>Daily</option>
+        <option value='hourly'>Hourly</option>
+      </select>
+    </label>
+    <div class='form-footer'>
+      <div class="form-btns">
+        <div>
+          <div id="load-indicator" class="htmx-indicator">Loading...</div>
+        </div>
+        <button type='submit'>Subscribe</button>
+      </div>
+      <div id="form-response"></div>
+    </div>
+  </form>
+</div>

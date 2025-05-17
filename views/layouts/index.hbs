@@ -1,0 +1,42 @@
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
+  <title>Weather API</title>
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --c-bg-1: #fff;
+      --c-bg-2: #eee;
+      --c-fg-1: #222;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: var(--c-bg-1);
+      color: var(--c-fg-1);
+    }
+  </style>
+</head>
+
+<body>
+  {{body}}
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+</body>
+
+</html>
