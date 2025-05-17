@@ -29,16 +29,9 @@ export class SubscriptionsService {
     const [sub] = await this.dbService.db
       .insert(subscriptionsTable)
       .values({ email: inp.email, city: inp.city, frequency: inp.frequency, confirmed: false })
-      .$returningId();
+      .returning();
     if (!sub) throw new Error('sub creation failed');
-
-    const [newSub] = await this.dbService.db
-      .select()
-      .from(subscriptionsTable)
-      .where(eq(subscriptionsTable.id, sub.id));
-    if (!newSub) throw new Error('newly created sub not found');
-
-    return newSub;
+    return sub;
   }
 
   async confirmSub(token: string) {
@@ -46,8 +39,9 @@ export class SubscriptionsService {
       const [res] = await this.dbService.db
         .update(subscriptionsTable)
         .set({ confirmed: true })
-        .where(eq(subscriptionsTable.confirmToken, token));
-      return res.affectedRows === 1;
+        .where(eq(subscriptionsTable.confirmToken, token))
+        .returning();
+      return !!res;
     } catch {
       return false;
     }
@@ -57,8 +51,9 @@ export class SubscriptionsService {
     try {
       const [res] = await this.dbService.db
         .delete(subscriptionsTable)
-        .where(eq(subscriptionsTable.unsubToken, token));
-      return res.affectedRows === 1;
+        .where(eq(subscriptionsTable.unsubToken, token))
+        .returning();
+      return !!res;
     } catch {
       return false;
     }

@@ -7,7 +7,7 @@ const DB_URL = z.string({ message: 'Missing DB_URL' }).parse(process.env.DB_URL)
 export default defineConfig({
   out: './drizzle',
   schema: './src/core/db/db.schema.ts',
-  dialect: 'mysql',
+  dialect: 'postgresql',
   dbCredentials: {
     url: DB_URL,
   },

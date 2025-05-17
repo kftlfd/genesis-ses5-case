@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { drizzle } from 'drizzle-orm/mysql2';
+import { drizzle } from 'drizzle-orm/node-postgres';
 import { AppConfig } from '../config/config';
 
 @Injectable()
