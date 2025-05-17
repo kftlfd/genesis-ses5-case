@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-TRIES=5
+TRIES=${TRIES:-5}
+WAIT=${WAIT:-3}
 MIGR_DONE=0
 
 while
@@ -13,7 +14,7 @@ while
     fi
     [[ $TRIES -gt 0 ]]
 do
-    sleep 3
+    sleep $WAIT
 done
 
 if [[ $MIGR_DONE -eq 1 ]]; then
