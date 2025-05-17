@@ -399,4 +399,3 @@ dist
 .webpack
 .serverless/**/*.zip
 .db
-drizzle
