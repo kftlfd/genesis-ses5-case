@@ -4,28 +4,33 @@ import { ConsoleLogger } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
 import { AppModule } from './app.module';
-import { env } from './env';
+import { AppConfig } from './core/config/config';
 
 async function bootstrap() {
+  const logger = new ConsoleLogger({ timestamp: true });
+
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: new ConsoleLogger({
-      timestamp: true,
-    }),
+    logger,
   });
 
-  const baseDir = join(__dirname, '..');
-  app.useStaticAssets(join(baseDir, 'public'));
-  app.setBaseViewsDir(join(baseDir, 'views'));
+  const conf = app.get(AppConfig);
+
+  const rootDir = join(__dirname, '..');
+  app.useStaticAssets(join(rootDir, 'public'));
+  app.setBaseViewsDir(join(rootDir, 'views'));
   app.engine(
     'hbs',
     hbs.engine({
       extname: 'hbs',
-      layoutsDir: join(baseDir, 'views', 'layouts'),
+      layoutsDir: join(rootDir, 'views', 'layouts'),
       compilerOptions: { noEscape: true },
     }),
   );
   app.setViewEngine('hbs');
 
-  await app.listen(env.PORT, env.HOST);
+  const { HOST, PORT } = conf.env;
+  await app.listen(PORT, HOST, () => {
+    logger.log(`running on ${HOST}:${PORT}`, 'App');
+  });
 }
 bootstrap().catch(console.error);

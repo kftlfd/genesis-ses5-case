@@ -19,7 +19,6 @@ services:
     env_file:
       - ./.env
     environment:
-      HOST: 0.0.0.0
       DB_URL: postgresql://user:pass@db:5432/weatherapi
     depends_on:
       - db
