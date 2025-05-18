@@ -2,7 +2,8 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { catchError, firstValueFrom } from 'rxjs';
 import { z } from 'zod';
-import { AppConfig } from 'src/core/config/config';
+
+import { AppConfig } from '@/core/config/config';
 
 const weatherApiResponseSchema = z.object({
   location: z.object({

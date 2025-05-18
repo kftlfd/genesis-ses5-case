@@ -1,4 +1,5 @@
 import { BadRequestException, Controller, Get, NotFoundException, Query } from '@nestjs/common';
+
 import { WeatherService } from './weather.service';
 
 @Controller('api/weather')

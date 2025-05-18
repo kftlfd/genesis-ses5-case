@@ -15,7 +15,9 @@ import {
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { Response } from 'express';
-import { EmailService } from 'src/core/email/email.service';
+
+import { EmailService } from '@/core/email/email.service';
+
 import { CreateSubDto } from './dto/create-sub.dto';
 import { SubscriptionsService } from './subscriptions.service';
 

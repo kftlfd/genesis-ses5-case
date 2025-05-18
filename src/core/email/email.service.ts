@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EmailParams, MailerSend, Recipient, Sender } from 'mailersend';
-import { AppConfig } from '../config/config';
+
+import { AppConfig } from '@/core/config/config';
 
 @Injectable()
 export class EmailService {

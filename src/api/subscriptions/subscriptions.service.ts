@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { and, eq } from 'drizzle-orm';
-import { Subscription, subscriptionsTable, UpdateFrequency } from 'src/core/db/db.schema';
-import { DBService } from 'src/core/db/db.service';
+
+import { Subscription, subscriptionsTable, UpdateFrequency } from '@/core/db/db.schema';
+import { DBService } from '@/core/db/db.service';
+
 import { CreateSubDto } from './dto/create-sub.dto';
 
 @Injectable()

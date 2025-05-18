@@ -1,4 +1,4 @@
-import { env, EnvConfig } from 'src/env';
+import { env, EnvConfig } from '@/env';
 
 export class AppConfig {
   public readonly env: EnvConfig;

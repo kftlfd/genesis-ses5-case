@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { SubscriptionsController } from './subscriptions.controller';
 
 describe('SubscriptionController', () => {

@@ -1,7 +1,8 @@
 import { Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { createSubscriptionReqBodySchema } from 'src/api/subscriptions/dto/create-sub.dto';
-import { SubscriptionsService } from 'src/api/subscriptions/subscriptions.service';
+
+import { createSubscriptionReqBodySchema } from '@/api/subscriptions/dto/create-sub.dto';
+import { SubscriptionsService } from '@/api/subscriptions/subscriptions.service';
 
 @Controller()
 export class FrontendController {

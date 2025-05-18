@@ -1,6 +1,7 @@
 import { createZodDto } from 'nestjs-zod';
-import { SUB_UPD_FREQS } from 'src/core/db/db.schema';
 import { z } from 'zod';
+
+import { SUB_UPD_FREQS } from '@/core/db/db.schema';
 
 export const createSubscriptionReqBodySchema = z.object({
   email: z.string().email(),

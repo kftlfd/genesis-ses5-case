@@ -1,6 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { AppConfig } from '../config/config';
+
+import { AppConfig } from '@/core/config/config';
+
 import { subscriptionsTable } from './db.schema';
 
 @Injectable()

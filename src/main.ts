@@ -3,9 +3,10 @@ import { NestFactory } from '@nestjs/core';
 import { ConsoleLogger } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
-import { AppModule } from './app.module';
-import { AppConfig } from './core/config/config';
-import { DBService } from './core/db/db.service';
+
+import { AppModule } from '@/app.module';
+import { AppConfig } from '@/core/config/config';
+import { DBService } from '@/core/db/db.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
