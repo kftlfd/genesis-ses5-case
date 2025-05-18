@@ -1,4 +1,5 @@
-FROM node:20.18
+FROM node:20.18-alpine
+RUN apk add --no-cache bash
 
 WORKDIR /app
 COPY package.json package-lock.json /app/
