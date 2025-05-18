@@ -45,7 +45,7 @@ export class SubscriptionsCronService {
           unsubToken,
         };
 
-        this.emailService.sendEmail(
+        await this.emailService.sendEmail(
           sub.email,
           `${sub.city} weather ${freq} update: ${now}`,
           JSON.stringify(email),

@@ -42,7 +42,7 @@ export class SubscriptionsController {
 
     const newSub = await this.subsService.createSub(body);
 
-    this.emailService.sendEmail(
+    await this.emailService.sendEmail(
       body.email,
       'Confirm subscription',
       `follow this link to confirm sub: http://localhost:8000/api/confirm/${newSub.confirmToken}`,
