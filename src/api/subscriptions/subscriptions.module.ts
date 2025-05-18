@@ -4,8 +4,8 @@ import { WeatherModule } from '@/api/weather/weather.module';
 import { EmailModule } from '@/email/email.module';
 
 import { SubscriptionsController } from './subscriptions.controller';
-import { SubscriptionsService } from './subscriptions.service';
 import { SubscriptionsCronService } from './subscriptions.cron';
+import { SubscriptionsService } from './subscriptions.service';
 
 @Module({
   imports: [EmailModule, WeatherModule],

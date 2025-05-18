@@ -1,8 +1,8 @@
-import { join } from 'node:path';
-import { NestFactory } from '@nestjs/core';
 import { ConsoleLogger } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
+import { join } from 'node:path';
 
 import { AppModule } from '@/app.module';
 import { AppConfig } from '@/core/config/config';

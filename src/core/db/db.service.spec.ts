@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppConfig } from '@/core/config/config';
 
 import { DBService } from './db.service';
+import { AppConfig } from '../config/config';
 
 describe('DbService', () => {
   let service: DBService;

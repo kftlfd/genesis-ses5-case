@@ -13,8 +13,8 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
-import { ZodValidationPipe } from 'nestjs-zod';
 import { Response } from 'express';
+import { ZodValidationPipe } from 'nestjs-zod';
 
 import { AdminRoute } from '@/core/decorators/admin-route.decorator';
 import { EmailService } from '@/email/email.service';

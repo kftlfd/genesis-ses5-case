@@ -4,6 +4,8 @@ import { HttpModule } from '@nestjs/axios';
 
 import { CoreModule } from '@/core/core.module';
 
+import { CoreModule } from '@/core/core.module';
+
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
 

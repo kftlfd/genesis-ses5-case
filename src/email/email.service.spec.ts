@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppConfig } from '@/core/config/config';
 
 import { EmailService } from './email.service';
+import { AppConfig } from '../config/config';
 
 describe('EmailService', () => {
   let service: EmailService;

@@ -4,6 +4,8 @@ import { Cron } from '@nestjs/schedule';
 import { EmailService } from '@/email/email.service';
 import { UpdateFrequency } from '@/core/db/db.schema';
 import { WeatherReport, WeatherService } from '@/api/weather/weather.service';
+import { UpdateFrequency } from '@/core/db/db.schema';
+import { EmailService } from '@/core/email/email.service';
 
 import { SubscriptionsService } from './subscriptions.service';
 

@@ -4,6 +4,7 @@ import { AppConfig } from '@/core/config/config';
 
 import { EmailController } from './email.controller';
 import { EmailService } from './email.service';
+import { AppConfig } from '../config/config';
 
 describe('EmailController', () => {
   let controller: EmailController;

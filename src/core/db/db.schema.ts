@@ -1,5 +1,5 @@
-import { randomUUID } from 'node:crypto';
 import { varchar, pgEnum, serial, boolean, pgTableCreator } from 'drizzle-orm/pg-core';
+import { randomUUID } from 'node:crypto';
 
 const pgTable = pgTableCreator((name) => `gses5_${name}`);
 

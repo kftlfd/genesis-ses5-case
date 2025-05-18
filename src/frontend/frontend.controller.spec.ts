@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { CoreModule } from '@/core/core.module';
 import { SubscriptionsModule } from '@/api/subscriptions/subscriptions.module';
+import { CoreModule } from '@/core/core.module';
 
 import { FrontendController } from './frontend.controller';
 

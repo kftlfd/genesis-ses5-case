@@ -1,5 +1,5 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { HttpModule } from '@nestjs/axios';
+import { Test, TestingModule } from '@nestjs/testing';
 
 import { CoreModule } from '@/core/core.module';
 
