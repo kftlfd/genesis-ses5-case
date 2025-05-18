@@ -5,15 +5,19 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'express-handlebars';
 import { AppModule } from './app.module';
 import { AppConfig } from './core/config/config';
+import { DBService } from './core/db/db.service';
 
 async function bootstrap() {
-  const logger = new ConsoleLogger({ timestamp: true });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger,
-  });
+  const logger = new ConsoleLogger({ timestamp: true });
+  logger.setContext('App');
+  app.useLogger(logger);
 
   const conf = app.get(AppConfig);
+
+  const db = app.get(DBService);
+  await db.testConnection();
 
   const rootDir = join(__dirname, '..');
   app.useStaticAssets(join(rootDir, 'public'));
@@ -30,7 +34,7 @@ async function bootstrap() {
 
   const { HOST, PORT } = conf.env;
   await app.listen(PORT, HOST, () => {
-    logger.log(`running on ${HOST}:${PORT}`, 'App');
+    logger.log(`running on ${HOST}:${PORT}`);
   });
 }
 bootstrap().catch(console.error);
