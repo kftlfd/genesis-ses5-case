@@ -4,6 +4,7 @@ import { z } from 'zod';
 const envSchema = z.object({
   HOST: z.string().default('localhost'),
   PORT: z.coerce.number().default(8000),
+  APP_BASE_URL: z.string().optional(),
   DB_URL: z.string(),
   WEATHER_API_URL: z.string().url(),
   WEATHER_API_KEY: z.string(),
@@ -12,9 +13,10 @@ const envSchema = z.object({
 });
 export type EnvConfig = z.infer<typeof envSchema>;
 
-export const env = envSchema.parse({
+export const env: EnvConfig = envSchema.parse({
   HOST: process.env.HOST,
   PORT: process.env.PORT,
+  APP_BASE_URL: process.env.APP_BASE_URL,
   DB_URL: process.env.DB_URL,
   WEATHER_API_URL: process.env.WEATHER_API_URL,
   WEATHER_API_KEY: process.env.WEATHER_API_KEY,

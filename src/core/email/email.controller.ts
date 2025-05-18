@@ -8,14 +8,7 @@ export class EmailController {
 
   @Post('test')
   async sendTestEmail(@Query('to') to: string) {
-    const sent = await this.emailService.sendEmail(
-      to,
-      'Test email',
-      `
-        <h1>Hello</h1>
-        <p>this is a test email</p>
-      `,
-    );
+    const sent = await this.emailService.sendTestEmail(to);
 
     return { message: sent ? 'Email sent' : 'Error' };
   }

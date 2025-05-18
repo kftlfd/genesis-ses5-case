@@ -42,16 +42,14 @@ export class SubscriptionsCronService {
 
         const unsubToken = sub.unsubToken;
 
-        const email = {
-          content,
-          unsubToken,
-        };
-
-        await this.emailService.sendEmail(
-          sub.email,
-          `${sub.city} weather ${freq} update: ${now}`,
-          JSON.stringify(email),
-        );
+        await this.emailService.sendWeatherUpdateEmail({
+          to: sub.email,
+          timestamp: now,
+          city: sub.city,
+          frequency: freq,
+          report: content,
+          unsubToken: unsubToken,
+        });
       } catch (err) {
         this.logger.log('sendUpdates', sub, err);
       }
