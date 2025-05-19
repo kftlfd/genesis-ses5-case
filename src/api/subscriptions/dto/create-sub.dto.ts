@@ -5,7 +5,7 @@ import { SUB_UPD_FREQS } from '@/core/db/db.schema';
 
 export const createSubscriptionReqBodySchema = z.object({
   email: z.string().email(),
-  city: z.string(),
+  city: z.string().min(1, 'City is required'),
   frequency: z.enum(SUB_UPD_FREQS),
 });
 
