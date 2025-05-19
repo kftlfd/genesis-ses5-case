@@ -26,7 +26,7 @@ export class FrontendController {
       try {
         const sub = await this.subsService.getSub(inp.data.email);
         if (sub) {
-          response = 'Email already subbed';
+          response = 'Email already subscribed';
         } else {
           await this.subsService.createSub(inp.data);
           response = 'Subscribed successfully! Check your email to confirm subscription';
