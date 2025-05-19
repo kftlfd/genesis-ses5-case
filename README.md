@@ -34,6 +34,8 @@ npm run start:dev
 
 ### Docker
 
+> Note: remember to create `.env` file before starting containers
+
 ```bash
 docker compose up --build
 ```
