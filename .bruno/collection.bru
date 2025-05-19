@@ -1,0 +1,13 @@
+headers {
+  Authorization: {{ADMIN_SECRET}}
+}
+
+auth {
+  mode: none
+}
+
+vars:pre-request {
+  BASE_URL: {{process.env.BASE_URL}}
+  ADMIN_SECRET: {{process.env.ADMIN_SECRET}}
+  ADMIN_EMAIL: {{process.env.ADMIN_EMAIL}}
+}

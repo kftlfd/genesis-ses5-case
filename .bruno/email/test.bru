@@ -1,0 +1,15 @@
+meta {
+  name: test
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/email/test?to={{ADMIN_EMAIL}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  to: {{ADMIN_EMAIL}}
+}

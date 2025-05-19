@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-TRIES=5
+TRIES=${TRIES:-5}
+WAIT=${WAIT:-3}
 MIGR_DONE=0
 
+# attempt apply db migrations, retry on error
 while
     npm run db:migrate
     if [[ $? -eq 0 ]]; then
@@ -13,11 +15,13 @@ while
     fi
     [[ $TRIES -gt 0 ]]
 do
-    sleep 3
+    sleep $WAIT
 done
 
-if [[ $MIGR_DONE -eq 1 ]]; then
-    npm run start:prod
-else
+# exit if migrations failed
+if [[ $MIGR_DONE -eq 0 ]]; then
     exit 1
 fi
+
+# start the app
+npm run start:prod

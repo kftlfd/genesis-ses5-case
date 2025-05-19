@@ -1,0 +1,16 @@
+meta {
+  name: report
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/email/test-report?to={{ADMIN_EMAIL}}&city=Kyiv
+  body: none
+  auth: inherit
+}
+
+params:query {
+  to: {{ADMIN_EMAIL}}
+  city: Kyiv
+}

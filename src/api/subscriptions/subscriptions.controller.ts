@@ -15,7 +15,10 @@ import {
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { Response } from 'express';
-import { EmailService } from 'src/core/email/email.service';
+
+import { AdminRoute } from '@/core/decorators/admin-route.decorator';
+import { EmailService } from '@/email/email.service';
+
 import { CreateSubDto } from './dto/create-sub.dto';
 import { SubscriptionsService } from './subscriptions.service';
 
@@ -27,6 +30,7 @@ export class SubscriptionsController {
   ) {}
 
   @Get('subs')
+  @AdminRoute()
   getAllSubs() {
     return this.subsService.getAllSubs();
   }
@@ -42,15 +46,16 @@ export class SubscriptionsController {
 
     const newSub = await this.subsService.createSub(body);
 
-    this.emailService.sendEmail(
-      body.email,
-      'Confirm subscription',
-      `follow this link to confirm sub: http://localhost:8000/api/confirm/${newSub.confirmToken}`,
-    );
+    const emailSent = await this.emailService.sendConfirmSubEmail({
+      to: body.email,
+      city: body.city,
+      frequency: body.frequency,
+      confirmToken: newSub.confirmToken,
+    });
 
-    return res
-      .status(HttpStatus.OK)
-      .send({ message: 'Subscription successful. Confirmation email sent.' });
+    return res.status(HttpStatus.OK).send({
+      message: `Subscription successful. Confirmation email ${emailSent ? 'sent' : 'error'}.`,
+    });
   }
 
   @Get('confirm/:token')

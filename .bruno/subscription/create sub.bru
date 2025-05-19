@@ -1,0 +1,17 @@
+meta {
+  name: create sub
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/api/subscribe
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  email: {{ADMIN_EMAIL}} @contentType(string)
+  city: Kyiv @contentType(string)
+  frequency: daily @contentType(string)
+}

@@ -2,7 +2,13 @@
     .form-response {
         padding-top: 0.5em;
     }
+
+    .form-response.ok {
+        color: green;
+    }
+
+    .form-response.err {
+        color: red;
+    }
 </style>
-<div class="form-response">
-    {{message}}
-</div>
+<div class="form-response {{status}}">{{message}}</div>

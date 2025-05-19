@@ -1,0 +1,15 @@
+meta {
+  name: unsub
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{BASE_URL}}/api/unsubscribe/:token
+  body: none
+  auth: inherit
+}
+
+params:path {
+  token: token
+}

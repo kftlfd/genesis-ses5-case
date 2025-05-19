@@ -1,9 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { EmailService } from 'src/core/email/email.service';
-import { UpdateFrequency } from 'src/core/db/db.schema';
+
+import { EmailService } from '@/email/email.service';
+import { UpdateFrequency } from '@/core/db/db.schema';
+import { WeatherReport, WeatherService } from '@/api/weather/weather.service';
+
 import { SubscriptionsService } from './subscriptions.service';
-import { WeatherReport, WeatherService } from '../weather/weather.service';
 
 @Injectable()
 export class SubscriptionsCronService {
@@ -40,16 +42,14 @@ export class SubscriptionsCronService {
 
         const unsubToken = sub.unsubToken;
 
-        const email = {
-          content,
-          unsubToken,
-        };
-
-        this.emailService.sendEmail(
-          sub.email,
-          `${sub.city} weather ${freq} update: ${now}`,
-          JSON.stringify(email),
-        );
+        await this.emailService.sendWeatherUpdateEmail({
+          to: sub.email,
+          timestamp: now,
+          city: sub.city,
+          frequency: freq,
+          report: content,
+          unsubToken: unsubToken,
+        });
       } catch (err) {
         this.logger.log('sendUpdates', sub, err);
       }

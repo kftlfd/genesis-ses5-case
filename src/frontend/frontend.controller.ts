@@ -1,7 +1,8 @@
 import { Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { createSubscriptionReqBodySchema } from 'src/api/subscriptions/dto/create-sub.dto';
-import { SubscriptionsService } from 'src/api/subscriptions/subscriptions.service';
+
+import { createSubscriptionReqBodySchema } from '@/api/subscriptions/dto/create-sub.dto';
+import { SubscriptionsService } from '@/api/subscriptions/subscriptions.service';
 
 @Controller()
 export class FrontendController {
@@ -16,26 +17,30 @@ export class FrontendController {
   async createSub(@Res() res: Response, @Req() req: Request) {
     const inp = createSubscriptionReqBodySchema.safeParse(req.body);
 
-    let response = 'Subscribed successfully';
+    let response = 'Unknown error';
+    let status: 'ok' | 'err' = 'err';
 
     if (!inp.success) {
-      response = inp.error.flatten().formErrors.join('. ');
+      response = inp.error.errors.map((err) => err.message).join(', ');
     } else {
       try {
         const sub = await this.subsService.getSub(inp.data.email);
         if (sub) {
-          response = 'Email already subbed';
+          response = 'Email already subscribed';
         } else {
           await this.subsService.createSub(inp.data);
+          response = 'Subscribed successfully! Check your email to confirm subscription';
+          status = 'ok';
         }
       } catch {
         response = 'Server error, please try again later';
       }
     }
 
-    return res.render('subscriptions/response', {
-      message: response,
+    return res.render('subscriptions/form-response', {
       layout: false,
+      message: response,
+      status,
     });
   }
 
@@ -43,7 +48,7 @@ export class FrontendController {
   async confirmSub(@Param('token') token: string, @Res() res: Response) {
     const confirmed = await this.subsService.confirmSub(token);
 
-    const response = confirmed ? 'Sub confirmed' : 'invalid token';
+    const response = confirmed ? 'Subscription confirmed!' : 'Invalid token';
 
     return res.render('subscriptions/token-response', { message: response, layout: 'index' });
   }
@@ -52,7 +57,7 @@ export class FrontendController {
   async removeSub(@Param('token') token: string, @Res() res: Response) {
     const unsubed = await this.subsService.removeSub(token);
 
-    const response = unsubed ? 'Unsubed' : 'invalid token';
+    const response = unsubed ? 'Unsubscribed successfully.' : 'Invalid token';
 
     return res.render('subscriptions/token-response', { message: response, layout: 'index' });
   }

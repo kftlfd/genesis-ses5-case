@@ -7,6 +7,7 @@
   }
 
   .subscr-form {
+    width: min(80vw, 500px);
     border: 1px solid currentColor;
     border-radius: 8px;
     background-color: var(--c-bg-2);
@@ -21,6 +22,7 @@
     margin: 0;
     font-size: 2em;
     font-weight: 500;
+    text-align: center;
   }
 
   .subscr-form label {
@@ -69,14 +71,14 @@
 
 <div class='form-container'>
   <form class='subscr-form' hx-post="/sub" hx-target="#form-response" hx-indicator="#load-indicator">
-    <h1>Subscribe to Weather Api</h1>
+    <h1>Subscribe to weather updates</h1>
     <label>
       <span>Email</span>
-      <input name='email' type='email' placeholder="email" required />
+      <input name='email' type='email' placeholder="email" />
     </label>
     <label>
       <span>City</span>
-      <input name='city' type='string' placeholder="City" required />
+      <input name='city' type='string' placeholder="City" />
     </label>
     <label>
       <span>Frequency</span>
