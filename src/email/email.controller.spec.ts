@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AppConfig } from '../config/config';
+import { AppConfig } from '@/core/config/config';
+
 import { EmailController } from './email.controller';
 import { EmailService } from './email.service';
 

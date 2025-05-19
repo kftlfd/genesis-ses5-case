@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { EmailParams, MailerSend, Recipient, Sender } from 'mailersend';
 
 import { AppConfig } from '@/core/config/config';
-import { UpdateFrequency } from '../db/db.schema';
+import { UpdateFrequency } from '@/core/db/db.schema';
 import { WeatherReport } from '@/api/weather/weather.service';
 
 function renderLink(link: string) {

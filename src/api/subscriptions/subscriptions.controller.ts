@@ -17,7 +17,7 @@ import { ZodValidationPipe } from 'nestjs-zod';
 import { Response } from 'express';
 
 import { AdminRoute } from '@/core/decorators/admin-route.decorator';
-import { EmailService } from '@/core/email/email.service';
+import { EmailService } from '@/email/email.service';
 
 import { CreateSubDto } from './dto/create-sub.dto';
 import { SubscriptionsService } from './subscriptions.service';

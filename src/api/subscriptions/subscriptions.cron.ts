@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 
-import { EmailService } from '@/core/email/email.service';
+import { EmailService } from '@/email/email.service';
 import { UpdateFrequency } from '@/core/db/db.schema';
 import { WeatherReport, WeatherService } from '@/api/weather/weather.service';
 
