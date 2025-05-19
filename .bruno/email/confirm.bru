@@ -1,0 +1,15 @@
+meta {
+  name: confirm
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}/email/test-confirm?to={{ADMIN_EMAIL}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  to: {{ADMIN_EMAIL}}
+}
