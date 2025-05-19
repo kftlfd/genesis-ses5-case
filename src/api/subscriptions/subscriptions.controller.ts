@@ -46,16 +46,16 @@ export class SubscriptionsController {
 
     const newSub = await this.subsService.createSub(body);
 
-    await this.emailService.sendConfirmSubEmail({
+    const emailSent = await this.emailService.sendConfirmSubEmail({
       to: body.email,
       city: body.city,
       frequency: body.frequency,
       confirmToken: newSub.confirmToken,
     });
 
-    return res
-      .status(HttpStatus.OK)
-      .send({ message: 'Subscription successful. Confirmation email sent.' });
+    return res.status(HttpStatus.OK).send({
+      message: `Subscription successful. Confirmation email ${emailSent ? 'sent' : 'error'}.`,
+    });
   }
 
   @Get('confirm/:token')

@@ -25,8 +25,8 @@ ${renderEmailFooter()}`;
 }
 
 function renderWeatherReport(report: WeatherReport) {
-  return `<p><b>Temperature:</b> ${report.temperature}</p>
-<p><b>Humidity:</b> ${report.humidity}</p>
+  return `<p><b>Temperature:</b> ${report.temperature}&#176;C</p>
+<p><b>Humidity:</b> ${report.humidity}%</p>
 <p><b>Description</b> ${report.description}</p>`;
 }
 
@@ -55,6 +55,10 @@ export class EmailService {
   constructor(private readonly appConfig: AppConfig) {
     this.mg = new MailerSend({ apiKey: appConfig.env.MAILERSEND_API_KEY });
     this.from = new Sender(`updates@${appConfig.env.MAILERSEND_DOMAIN}`, 'Weather API');
+  }
+
+  sendTestEmail(to: string) {
+    return this.sendEmail(to, 'Test email', `<h1>Hello</h1><p>this is a test email</p>`);
   }
 
   sendConfirmSubEmail(arg: {
@@ -86,13 +90,9 @@ export class EmailService {
 
     return this.sendEmail(
       arg.to,
-      `${arg.city} weather ${arg.frequency} update: ${arg.timestamp}`,
+      `"${arg.city}" weather ${arg.frequency} update: ${arg.timestamp}`,
       renderWeatherReportEmail(arg.city, arg.timestamp, arg.report, unsubFELink, unsubAPILink),
     );
-  }
-
-  sendTestEmail(to: string) {
-    return this.sendEmail(to, 'Test email', `<h1>Hello</h1><p>this is a test email</p>`);
   }
 
   private async sendEmail(to: string, subject: string, content: string) {
