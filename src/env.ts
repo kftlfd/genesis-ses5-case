@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { z } from 'zod';
 
 const envSchema = z.object({
+  ADMIN_SECRET: z.string().optional(),
   HOST: z.string().default('localhost'),
   PORT: z.coerce.number().default(8000),
   APP_BASE_URL: z.string().optional(),
@@ -14,6 +15,7 @@ const envSchema = z.object({
 export type EnvConfig = z.infer<typeof envSchema>;
 
 export const env: EnvConfig = envSchema.parse({
+  ADMIN_SECRET: process.env.ADMIN_SECRET,
   HOST: process.env.HOST,
   PORT: process.env.PORT,
   APP_BASE_URL: process.env.APP_BASE_URL,

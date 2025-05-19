@@ -16,6 +16,7 @@ import { NoFilesInterceptor } from '@nestjs/platform-express';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { Response } from 'express';
 
+import { AdminRoute } from '@/core/decorators/admin-route.decorator';
 import { EmailService } from '@/core/email/email.service';
 
 import { CreateSubDto } from './dto/create-sub.dto';
@@ -29,6 +30,7 @@ export class SubscriptionsController {
   ) {}
 
   @Get('subs')
+  @AdminRoute()
   getAllSubs() {
     return this.subsService.getAllSubs();
   }
