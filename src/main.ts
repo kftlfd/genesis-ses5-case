@@ -2,6 +2,7 @@ import { join } from 'node:path';
 import { NestFactory } from '@nestjs/core';
 import { ConsoleLogger } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as hbs from 'express-handlebars';
 
 import { AppModule } from '@/app.module';
@@ -32,6 +33,15 @@ async function bootstrap() {
     }),
   );
   app.setViewEngine('hbs');
+
+  const config = new DocumentBuilder()
+    .setTitle('Weather API')
+    .setDescription('Subscribe to weather updates')
+    .setVersion('1.0')
+    .addTag('API')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, documentFactory);
 
   const { HOST, PORT } = conf.env;
   await app.listen(PORT, HOST, () => {
