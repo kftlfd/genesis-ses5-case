@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-TRIES=${TRIES:-5}
-WAIT=${WAIT:-3}
+TRIES=${TRIES:-3}
+WAIT=${WAIT:-5}
 MIGR_DONE=0
 
-# attempt apply db migrations, retry on error
+# attempt to push db schema, retry on error
 while
-    npm run db:migrate
+    npm run db:push
     if [[ $? -eq 0 ]]; then
         MIGR_DONE=1
         TRIES=0
