@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpModule } from '@nestjs/axios';
 
@@ -21,5 +22,11 @@ describe('WeatherController', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+  });
+
+  describe('get-weather', () => {
+    it('should error on invalid input', async () => {
+      await expect(controller.getWeather('')).rejects.toThrow(BadRequestException);
+    });
   });
 });
