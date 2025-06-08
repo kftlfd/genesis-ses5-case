@@ -7,6 +7,7 @@ import * as hbs from 'express-handlebars';
 import { AppModule } from '@/app.module';
 import { AppConfig } from '@/core/config/config';
 import { DBService } from '@/core/db/db.service';
+import { CacheService } from '@/core/cache/cache.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -19,6 +20,9 @@ async function bootstrap() {
 
   const db = app.get(DBService);
   await db.testConnection();
+
+  const cache = app.get(CacheService);
+  await cache.init();
 
   const rootDir = join(__dirname, '..');
   app.useStaticAssets(join(rootDir, 'public'));

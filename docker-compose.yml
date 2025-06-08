@@ -22,3 +22,10 @@ services:
       DB_URL: postgresql://user:pass@db:5432/weatherapi
     depends_on:
       - db
+    profiles:
+      - all
+
+  redis:
+    image: redis:8-alpine
+    ports:
+      - 6379:6379
